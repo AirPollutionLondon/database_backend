@@ -1,14 +1,11 @@
 package pollutionapi.service;
 
 import com.mongodb.*;
-import com.mongodb.client.MongoClients;
 import org.bson.Document;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.MongoClient;
-
-import java.util.ArrayList;
 
 /**
  * Represents a Mongo connection pool, a final class that cannot be extended.

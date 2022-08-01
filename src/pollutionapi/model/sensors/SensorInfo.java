@@ -3,10 +3,6 @@ package pollutionapi.model.sensors;
 import pollutionapi.model.utils.AGetSet;
 import java.util.HashMap;
 
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import static com.mongodb.client.model.Filters.eq;
-
 /**
  * Represents an air pollution sensor, which composes a list of sensor readings.
  *

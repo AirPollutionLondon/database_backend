@@ -47,6 +47,7 @@ import java.util.HashMap;
         document.append("lon", lon);
         sensorReadingsColl.insertOne(document);
     }
+
     @Override
     public void updateSensor(String serialNumber, HashMap<String, Object> hashMap) {
         this.update("serialNumber", serialNumber, "sensors", "sensorInfo", hashMap);

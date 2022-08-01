@@ -5,8 +5,10 @@
  */
 package pollutionapi.dbserver;
 
-import pollutionapi.model.users.UserCredentials;
+import pollutionapi.model.sensors.*;
+import pollutionapi.model.users.*;
 import pollutionapi.service.UserService;
+import pollutionapi.service.SensorService;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -72,22 +74,47 @@ public class DbServer extends HttpServlet {
          // get the command to execute and the request payload from the request
         String dbCommand = request.getPathInfo();
         String jsonPayLoad = getPayLoad (request);
+
+        Gson gson = new Gson();
+        UserService userService = new UserService();
+        SensorService sensorService = new SensorService();
+
+
         switch (dbCommand) {
             case "/login":
-                Gson gson = new Gson();
-                UserCredentials creds = gson.fromJson(jsonPayLoad, UserCredentials.class);
-                UserService service = new UserService();
                 try {
-                    service.validateCredentials(creds.getUser(), creds.getPwd());
+                    UserCredentials creds = gson.fromJson(jsonPayLoad, UserCredentials.class);
+                    userService.validateCredentials(creds.getUser(), creds.getPwd());
                     response.setStatus(HttpServletResponse.SC_OK);
-                } catch (IllegalArgumentException ex) {
+                    response.getWriter().println("User valid");
+                } catch (Exception ex) {
                     response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    response.getWriter().println(ex.getMessage());
                     response.getWriter().println("User/pwd not valid");
                 }
                 break;
-            case  "/sensordata":
+            case  "/newsensorreading":
+                ISensorReading sensorReading =
+                        gson.fromJson(jsonPayLoad, SpringSensorReading.class).createSensorReading();
+                sensorService.addSensorReading(sensorReading);
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.getWriter().println("Sensor Reading added");
+                break;
+            case  "/newsensor":
+                ISensor sensor = gson.fromJson(jsonPayLoad, SpringSensor.class).createSensorInfo();
+                sensorService.addNewSensor(sensor);
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.getWriter().println("Sensor added");
                 break;
             case "/newuser":
+                IUser user = gson.fromJson(jsonPayLoad, SpringUser.class).createNewUser();
+                userService.addNewUser(user);
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.getWriter().println("User added");
+                break;
+            case  "/":
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.getWriter().println("Error: not a valid endpoint.");
                 break;
             default:
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);

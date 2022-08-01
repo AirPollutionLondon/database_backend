@@ -1,5 +1,7 @@
 package pollutionapi.model.users;
 
+import pollutionapi.model.sensors.ISensor;
+
 import java.util.ArrayList;
 
 public class SpringUser {
@@ -24,6 +26,19 @@ public class SpringUser {
         this.phone = ph;
         this. postcode = pcode;
     }
+
+    public IUser createNewUser() {
+        ArrayList<ISensor> s = new ArrayList<ISensor>();
+        return new User(this.email, this.firstName, this.lastName, this.password, this.postcode, this.phone, s);
+    }
+
+//    String email,
+//    String firstName,
+//    String lastName,
+//    String password,
+//    String location,
+//    int phone,
+//    List<ISensor> ownedSensors
 
     /**
      * @return the firstName
