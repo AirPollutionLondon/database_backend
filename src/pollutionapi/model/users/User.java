@@ -29,7 +29,7 @@ public class User extends AGetSet implements IUser {
                 String lastName,
                 String password,
                 String location,
-                int phone,
+                String phone,
                 List<ISensor> ownedSensors)
             throws IllegalArgumentException {
         this.fields = new HashMap<>();

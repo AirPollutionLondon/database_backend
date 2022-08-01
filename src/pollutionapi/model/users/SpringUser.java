@@ -10,21 +10,21 @@ public class SpringUser {
   private String username;
   private String email;
   private String password;
-  private Integer phone;
+  private String phone;
   private String postcode;
 
     /**
      *
      * 
      */
-    public SpringUser(String fn, String ln, String un, String email, String pwd, Integer ph, String pcode) {
+    public SpringUser(String fn, String ln, String un, String email, String pwd, String ph, String pcode) {
         this.firstName = fn;
-        this. lastName = ln;
+        this.lastName = ln;
         this.username= un;
         this.email = email;
         this.password = pwd;
         this.phone = ph;
-        this. postcode = pcode;
+        this.postcode = pcode;
     }
 
     public IUser createNewUser() {
@@ -113,14 +113,14 @@ public class SpringUser {
     /**
      * @return the phone
      */
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
     /**
      * @param phone the phone to set
      */
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

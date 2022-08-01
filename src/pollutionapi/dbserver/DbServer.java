@@ -79,38 +79,56 @@ public class DbServer extends HttpServlet {
         UserService userService = new UserService();
         SensorService sensorService = new SensorService();
 
-
         switch (dbCommand) {
             case "/login":
                 try {
                     UserCredentials creds = gson.fromJson(jsonPayLoad, UserCredentials.class);
                     userService.validateCredentials(creds.getUser(), creds.getPwd());
                     response.setStatus(HttpServletResponse.SC_OK);
-                    response.getWriter().println("User valid");
+                    response.getWriter().println("User is valid");
                 } catch (Exception ex) {
                     response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     response.getWriter().println(ex.getMessage());
-                    response.getWriter().println("User/pwd not valid");
+                    response.getWriter().println("User/pwd is not valid");
                 }
                 break;
             case  "/newsensorreading":
-                ISensorReading sensorReading =
-                        gson.fromJson(jsonPayLoad, SpringSensorReading.class).createSensorReading();
-                sensorService.addSensorReading(sensorReading);
-                response.setStatus(HttpServletResponse.SC_OK);
-                response.getWriter().println("Sensor Reading added");
+                try {
+                    ISensorReading sensorReading =
+                            gson.fromJson(jsonPayLoad, SpringSensorReading.class).createSensorReading();
+                    sensorService.addSensorReading(sensorReading);
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    response.getWriter().println("Sensor Reading added");
+                 } catch (Exception ex) {
+                           response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    response.getWriter().println(ex.getMessage());
+                    response.getWriter().println("Sensor reading not added");
+                }
+      
                 break;
             case  "/newsensor":
-                ISensor sensor = gson.fromJson(jsonPayLoad, SpringSensor.class).createSensorInfo();
-                sensorService.addNewSensor(sensor);
-                response.setStatus(HttpServletResponse.SC_OK);
-                response.getWriter().println("Sensor added");
+                try {
+                    ISensor sensor = gson.fromJson(jsonPayLoad, SpringSensor.class).createSensorInfo();
+                    sensorService.addNewSensor(sensor);
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    response.getWriter().println("Sensor added");
+                } catch (Exception ex) {
+                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    response.getWriter().println(ex.getMessage());
+                    response.getWriter().println("Adding sensor failed");
+                }
                 break;
             case "/newuser":
-                IUser user = gson.fromJson(jsonPayLoad, SpringUser.class).createNewUser();
-                userService.addNewUser(user);
-                response.setStatus(HttpServletResponse.SC_OK);
-                response.getWriter().println("User added");
+                try {
+                    IUser user = gson.fromJson(jsonPayLoad, SpringUser.class).createNewUser();
+                    userService.addNewUser(user);
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    response.getWriter().println("User added");
+                } catch (Exception ex) {
+                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    response.getWriter().println(ex.getMessage());
+                    response.getWriter().println("adding new user failed");
+                }
                 break;
             case  "/":
                 response.setStatus(HttpServletResponse.SC_OK);
@@ -118,7 +136,7 @@ public class DbServer extends HttpServlet {
                 break;
             default:
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                response.getWriter().println("Database operation not recognized");
+                response.getWriter().println("Database operation is not REALLY recognized");
                 
         }
 

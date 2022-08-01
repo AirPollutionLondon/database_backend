@@ -124,10 +124,10 @@ public class UserService extends AService implements IUserService {
 //        hm.put("lastName", "Hed");
 //
         IUser user = new User("jess12312e2222@aol.com", "Jess", "Fedor", ")ASDDU)SA???",
-                "12312A", 857932903, new ArrayList<>());
+                "12312A", "857932903", new ArrayList<>());
 
         IUser user2 = new User("jescasdfssica@live.com", "Jess", "Fedor", ")ASasdasU)SA???",
-                "1231AA", 857922903, new ArrayList<>());
+                "1231AA", "857922904", new ArrayList<>());
 //        userService.addNewUser(user);
         SensorService sensorService = new SensorService();
         sensorService.addNewSensor(new SensorInfo("jess12312e2222@aol.com", "1234567890123456",
